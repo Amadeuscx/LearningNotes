@@ -161,7 +161,7 @@ ELEMENT_NOT_FOUND : int = -1;
 
 为我们要考虑是否允许用户储存*null*值。
 
-若允许则要考录*null*值的处理，因为我们不能使用null来访问任何方法，这会使程序抛出异常。
+若允许则要考录*null*值的处理，因为我们不能使用*null*来访问任何方法，这会使程序抛出异常。
 
 ```java
     public int indexOf(E element) {
