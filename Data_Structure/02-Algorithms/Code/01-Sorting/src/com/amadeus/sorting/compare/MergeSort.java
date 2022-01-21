@@ -1,4 +1,6 @@
-package com.amadeus.sorting;
+package com.amadeus.sorting.compare;
+
+import com.amadeus.sorting.Sort;
 
 public class MergeSort<T extends Comparable<T>> extends Sort<T> {
     //复制左半边数组

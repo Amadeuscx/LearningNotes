@@ -1,4 +1,6 @@
-package com.amadeus.sorting;
+package com.amadeus.sorting.compare;
+
+import com.amadeus.sorting.Sort;
 
 public class QuickSort<T extends Comparable<T>> extends Sort<T> {
     @Override
