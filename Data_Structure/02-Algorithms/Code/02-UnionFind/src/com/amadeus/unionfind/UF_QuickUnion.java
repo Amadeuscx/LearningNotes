@@ -16,11 +16,11 @@ public class UF_QuickUnion extends UnionFind {
 
     @Override
     public void union(int v1, int v2) {
-        int p1 = find(v1);
-        int p2 = find(v2);
-        if (p1 == p2) return;
+        int r1 = find(v1);
+        int r2 = find(v2);
+        if (r1 == r2) return;
 
-        parents[p1] = p2;
+        parents[r1] = r2;
     }
 
 
