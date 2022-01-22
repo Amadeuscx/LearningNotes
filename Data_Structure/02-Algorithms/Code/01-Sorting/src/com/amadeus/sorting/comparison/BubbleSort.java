@@ -1,4 +1,4 @@
-package com.amadeus.sorting.compare;
+package com.amadeus.sorting.comparison;
 
 import com.amadeus.sorting.Sort;
 
