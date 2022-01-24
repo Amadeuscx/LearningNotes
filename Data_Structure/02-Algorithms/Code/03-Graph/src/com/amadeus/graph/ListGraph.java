@@ -102,7 +102,23 @@ public class ListGraph<V, E> implements Graph<V, E> {
 
     @Override
     public void dfs(V begin) {
+        Vertex<V, E> beginVertex = vertices.get(begin);
+        if (beginVertex == null) {return;}
 
+        Set<Vertex<V, E>> visitedVertices = new HashSet<>();
+        Stack<Vertex<V, E>> vertexStack = new Stack<>();
+        vertexStack.push(beginVertex);
+        visitedVertices.add(beginVertex);
+
+        while (!vertexStack.isEmpty()) {
+            Vertex<V, E> vertex = vertexStack.pop();
+            System.out.println(vertex);
+            for (Edge<V, E> edge : vertex.outEdges) {
+                if (visitedVertices.contains(edge.to)) continue;
+                vertexStack.push(edge.to);
+                visitedVertices.add(edge.to);
+            }
+        }
     }
 
 
