@@ -1,11 +1,23 @@
 package com.amadeus.graph;
 
+import com.amadeus.tools.MinHeap;
+import com.amadeus.tools.UnionFind;
+
 import java.util.*;
 
-public class ListGraph<V, E> implements Graph<V, E> {
+public class ListGraph<V, E> extends Graph<V, E> {
     private Map<V, Vertex<V, E>> vertices = new HashMap<>();
     private Set<Edge<V, E>> edges = new HashSet<>();
+    private Comparator<Edge<V, E>> edgeComparator = (Edge<V, E> e1, Edge<V, E> e2) -> {
+        return weightManager.compare(e1.weight, e2.weight);
+    };
 
+    public ListGraph() {
+        super();
+    }
+    public ListGraph(WeightManager<E> weightManager) {
+        super(weightManager);
+    }
 
     @Override
     public int edgesSize() {
@@ -167,15 +179,53 @@ public class ListGraph<V, E> implements Graph<V, E> {
         }
     }
 
+    @Override
+    public Set<EdgeInfo<V, E>> mst() {
+        return Math.random() > 0.5 ? prim() : kruskal();
+    }
 
+    private Set<EdgeInfo<V, E>> prim() {
+        Iterator<Vertex<V, E>> it = vertices.values().iterator();
+        if (!it.hasNext()) {return null;}
 
+        Vertex<V, E> vertex = it.next();
+        Set<EdgeInfo<V, E>> edgeInfos = new HashSet<>();
+        Set<Vertex<V, E>> addedVertices = new HashSet<>();
+        addedVertices.add(vertex);
 
+        MinHeap<Edge<V, E>> heap = new MinHeap<>(vertex.outEdges, edgeComparator);
 
+        while (addedVertices.size() < verticesSize()){
+            Edge<V ,E> edge = heap.remove();
+            if (addedVertices.contains(edge.to)) {continue;}
 
+            edgeInfos.add(edge.info());
+            addedVertices.add(edge.to);
+            heap.addAll(edge.to.outEdges);
+        }
+        return edgeInfos;
+    }
 
+    private Set<EdgeInfo<V, E>> kruskal() {
+        int edeesize = vertices.size() - 1;
+        if (edeesize < 1) return null;
 
+        MinHeap<Edge<V, E>> heap = new MinHeap<>(edges, edgeComparator);
+        Set<EdgeInfo<V, E>> edgeInfos = new HashSet<>();
+        UnionFind<Vertex<V, E>> uf = new UnionFind<>();
+        vertices.forEach((V v, Vertex<V, E> vertex) -> {
+            uf.makeSet(vertex);
+        });
 
+        while (!heap.isEmpty() && edgeInfos.size() < edeesize) {
+            Edge<V, E> edge = heap.remove();
+            if (uf.isSame(edge.from, edge.to)) {continue;}
 
+            uf.union(edge.from, edge.to);
+            edgeInfos.add(edge.info());
+        }
+        return edgeInfos;
+    }
 
 
     private static class Vertex<V, E> {
@@ -214,6 +264,10 @@ public class ListGraph<V, E> implements Graph<V, E> {
         }
         Edge(Vertex<V, E> from, Vertex<V, E> to) {
             this(from, to, null);
+        }
+
+        EdgeInfo info() {
+            return new EdgeInfo<V, E>(from.value, to.value, weight);
         }
 
         @Override
