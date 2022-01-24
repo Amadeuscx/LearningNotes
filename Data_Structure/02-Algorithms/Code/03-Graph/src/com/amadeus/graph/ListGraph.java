@@ -8,6 +8,19 @@ public class ListGraph<V, E> implements Graph<V, E> {
 
 
     @Override
+    public int edgesSize() {
+        return edges.size();
+    }
+
+    @Override
+    public int verticesSize() {
+        return vertices.size();
+    }
+
+
+
+
+    @Override
     public void addVertex(V v) {
         if (vertices.containsKey(v)) {return;}
 
@@ -69,17 +82,8 @@ public class ListGraph<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public int edgesSize() {
-        return edges.size();
-    }
-
-    @Override
-    public int verticesSize() {
-        return vertices.size();
-    }
-
-    @Override
-    public void bfs(V begin) {
+    public void bfs(V begin, VertexVisitor<V> visitor) {
+        if (visitor == null) {return;}
         Vertex<V, E> beginVertex = vertices.get(begin);
         if (beginVertex == null) {return;}
 
@@ -90,7 +94,8 @@ public class ListGraph<V, E> implements Graph<V, E> {
 
         while (!queue.isEmpty()) {
             Vertex<V, E> vertex = queue.poll();
-            System.out.println(vertex);
+
+            if (visitor.visit(vertex.value)) {return;}
 
             for (Edge<V, E> edge : vertex.outEdges) {
                 if (visitedVertices.contains(edge.to)) continue;
@@ -101,7 +106,8 @@ public class ListGraph<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public void dfs(V begin) {
+    public void dfs(V begin, VertexVisitor<V> visitor) {
+        if (visitor == null) {return;}
         Vertex<V, E> beginVertex = vertices.get(begin);
         if (beginVertex == null) {return;}
 
@@ -112,7 +118,9 @@ public class ListGraph<V, E> implements Graph<V, E> {
 
         while (!vertexStack.isEmpty()) {
             Vertex<V, E> vertex = vertexStack.pop();
-            System.out.println(vertex);
+
+            if (visitor.visit(vertex.value)) {return;}
+
             for (Edge<V, E> edge : vertex.outEdges) {
                 if (visitedVertices.contains(edge.to)) continue;
                 vertexStack.push(edge.to);
@@ -120,6 +128,54 @@ public class ListGraph<V, E> implements Graph<V, E> {
             }
         }
     }
+
+    @Override
+    public List<V> topologicalSort() {
+        List<V> sortedList = new ArrayList<>();
+        Queue<Vertex<V, E>> vertexQueue = new LinkedList<>();
+        Map<Vertex<V, E>, Integer> ins = new HashMap<>();
+
+        vertices.forEach((V v, Vertex<V, E> vertex) -> {
+            int in = vertex.inEdges.size();
+            if (in == 0) {
+                vertexQueue.offer(vertex);
+            } else {
+                ins.put(vertex, in);
+            }
+        });
+
+        while (!vertexQueue.isEmpty()) {
+            Vertex<V, E> vertex = vertexQueue.poll();
+            sortedList.add(vertex.value);
+
+            for (Edge<V, E> edge : vertex.outEdges) {
+                int toIn = ins.get(edge.to) - 1;
+
+                if (toIn == 0) {
+                    vertexQueue.offer(edge.to);
+                }else {
+                    ins.put(edge.to, toIn);
+                }
+            }
+        }
+
+        if (sortedList.size() != verticesSize()) {
+//            return null;
+            throw new RuntimeException("此图不是AOV网，无法使用拓扑排序");
+        }else {
+            return sortedList;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     private static class Vertex<V, E> {
