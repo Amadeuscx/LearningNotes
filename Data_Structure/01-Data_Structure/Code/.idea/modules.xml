@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/01-MyArrayList/01-MyArrayList.iml" filepath="$PROJECT_DIR$/01-MyArrayList/01-MyArrayList.iml" />
       <module fileurl="file://$PROJECT_DIR$/02-MyLinkedList/02-MyLinkedList.iml" filepath="$PROJECT_DIR$/02-MyLinkedList/02-MyLinkedList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/03-MyStack/03-MyStack.iml" filepath="$PROJECT_DIR$/03-MyStack/03-MyStack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/04-MyQueue/04-MyQueue.iml" filepath="$PROJECT_DIR$/04-MyQueue/04-MyQueue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/05-BinaryTree/05-BinaryTree.iml" filepath="$PROJECT_DIR$/05-BinaryTree/05-BinaryTree.iml" />
       <module fileurl="file://$PROJECT_DIR$/Code.iml" filepath="$PROJECT_DIR$/Code.iml" />
     </modules>
   </component>
