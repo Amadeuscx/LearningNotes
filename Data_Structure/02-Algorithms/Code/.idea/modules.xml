@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/01-Sorting/01-Sorting.iml" filepath="$PROJECT_DIR$/01-Sorting/01-Sorting.iml" />
       <module fileurl="file://$PROJECT_DIR$/02-UnionFind/02-UnionFind.iml" filepath="$PROJECT_DIR$/02-UnionFind/02-UnionFind.iml" />
       <module fileurl="file://$PROJECT_DIR$/03-Graph/03-Graph.iml" filepath="$PROJECT_DIR$/03-Graph/03-Graph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/04-Recursion/04-Recursion.iml" filepath="$PROJECT_DIR$/04-Recursion/04-Recursion.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Code.iml" filepath="$PROJECT_DIR$/.idea/Code.iml" />
     </modules>
   </component>

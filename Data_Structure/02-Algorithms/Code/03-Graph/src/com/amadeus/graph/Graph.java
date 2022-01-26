@@ -1,7 +1,6 @@
 package com.amadeus.graph;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Graph<V, E> {
     protected WeightManager<E> weightManager;
@@ -24,13 +23,42 @@ public abstract class Graph<V, E> {
     public abstract void removeVertex(V v);
     public abstract void removeEdge(V from, V to);
 
-
     public abstract void bfs(V begin, VertexVisitor<V> visitor);
     public abstract void dfs(V begin, VertexVisitor<V> visitor);
 
     public abstract List<V> topologicalSort();
 
     public abstract Set<EdgeInfo<V, E>> mst();
+
+    public abstract Map<V, PathInfo<V, E>> shortestPath(V begin);
+
+    public static class PathInfo<V, E> {
+        private E weight;
+        private List<EdgeInfo<V, E>> edgeInfos = new LinkedList<>();
+
+        protected PathInfo() {}
+        protected PathInfo(E weight) {
+            this.weight = weight;
+        }
+
+
+
+        public E getWeight() {
+            return weight;
+        }
+
+        public void setWeight(E weight) {
+            this.weight = weight;
+        }
+
+        public List<EdgeInfo<V, E>> getEdgeInfos() {
+            return edgeInfos;
+        }
+
+        public void setEdgeInfos(List<EdgeInfo<V, E>> edgeInfos) {
+            this.edgeInfos = edgeInfos;
+        }
+    }
 
     public static class EdgeInfo<V, E> {
         private V from;
@@ -76,5 +104,6 @@ public abstract class Graph<V, E> {
         int compare(E w1, E w2); //用于权值比较
         E add(E w1, E w2);       //用于权值相加
         E zero();
+
     }
 }

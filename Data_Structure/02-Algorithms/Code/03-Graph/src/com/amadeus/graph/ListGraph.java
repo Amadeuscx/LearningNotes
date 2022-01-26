@@ -11,6 +11,9 @@ public class ListGraph<V, E> extends Graph<V, E> {
     private Comparator<Edge<V, E>> edgeComparator = (Edge<V, E> e1, Edge<V, E> e2) -> {
         return weightManager.compare(e1.weight, e2.weight);
     };
+    private Comparator<PathInfo<V, E>> pathInfoComparator = (PathInfo<V, E> p1, PathInfo<V, E>p2) -> {
+        return weightManager.compare(p1.getWeight(), p2.getWeight());
+    };
 
     public ListGraph() {
         super();
@@ -225,6 +228,22 @@ public class ListGraph<V, E> extends Graph<V, E> {
             edgeInfos.add(edge.info());
         }
         return edgeInfos;
+    }
+
+    @Override
+    public Map<V, PathInfo<V, E>> shortestPath(V begin) {
+        return dijkstra(begin);
+    }
+
+    private Map<V, PathInfo<V,E>> dijkstra(V begin) {
+        Vertex<V, E> beginVertex = vertices.get(begin);
+        if (beginVertex == null) return null;
+
+
+
+
+        return null;
+
     }
 
 
