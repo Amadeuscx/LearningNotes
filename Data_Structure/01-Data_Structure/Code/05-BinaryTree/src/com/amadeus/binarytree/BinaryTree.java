@@ -2,9 +2,176 @@ package com.amadeus.binarytree;
 
 import com.amadeus.printer.BinaryTreeInfo;
 
+import java.util.Stack;
+
 public abstract class BinaryTree<E> implements BinaryTreeInfo {
     protected int size;
     protected Node<E> root;
+
+
+
+    /**
+     * 前序遍历
+     * @param root
+     * @param visitor
+     */
+    protected void preorder(Node<E> root, Visitor<E> visitor) {
+        if (root == null || visitor == null) {return;}
+        Node<E> cur = root;
+        Stack<Node<E>> stack = new Stack<>();
+        stack.push(cur);
+        while (!stack.isEmpty()) {
+            cur = stack.pop();
+            if (visitor.visit(cur.element)) {return;};
+            if (cur.right != null) {
+                stack.push(cur.right);
+            }
+            if (cur.left != null) {
+                stack.push(cur.left);
+            }
+        }
+    }
+    public void preorder(Visitor<E> visitor) {
+        preorder(root, visitor);
+    }
+
+    /**
+     * 中序遍历
+     * @param root
+     * @param visitor
+     */
+    protected void inorder(Node<E> root, Visitor<E> visitor) {
+        if (root == null && visitor == null) {return;}
+
+        Node<E> cur = root;
+        Stack<Node<E>> stack = new Stack<>();
+        while (!stack.isEmpty() || cur != null) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            if (!stack.isEmpty()) {
+                cur = stack.pop();
+                if (visitor.visit(cur.element)) {return;}
+                cur = cur.right;
+            }
+        }
+    }
+    public void inorder(Visitor<E> visitor) {
+        inorder(root, visitor);
+    }
+
+    /**
+     * 寻找前驱节点
+     * @param node
+     */
+    protected Node<E> predecessor(Node<E> node) {
+        if (node == null) {return null;}
+        Node<E> current = node.left;
+
+        if (current != null) {
+            while (current.right != null){
+                current = current.right;
+            }
+            return current;
+        }
+
+        while (node.parent != null && node == node.parent.left) {
+            node = node.parent;
+        }
+        return node.parent;
+    }
+
+    /**
+     * 寻找后继节点
+     */
+    protected Node<E> successor(Node<E> node) {
+        if (node == null) return null;
+        Node<E> current = node.right;
+
+        if (current != null) {
+            while (current.left != null) {
+                current = current.left;
+            }
+            return current;
+        }
+
+        while (node.parent != null && node == node.parent.right) {
+            node = node.parent;
+        }
+        return node.parent;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    protected static class Node<E> {
+        E element;
+        Node<E> left;
+        Node<E> right;
+        Node<E> parent;
+
+        public Node(E element, Node<E> parent) {
+            this.element = element;
+            this.parent = parent;
+        }
+        public Node(E element) {
+            this(element, null);
+        }
+
+        public boolean hasTwoChilden() {
+            return (left != null && right != null);
+        }
+
+        public boolean isLeaf() {
+            return (left == null && right == null);
+        }
+
+        public boolean isLeftchild() {
+            return (parent != null && this == parent.left);
+        }
+
+        public boolean isRightChild() {
+            return (parent != null && this == parent.right);
+        }
+
+    }
+
+    public interface Visitor<E> {
+        boolean visit(E element);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public Object root() {
@@ -29,20 +196,5 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
             parentString = myNode.parent.element.toString();
         }
         return myNode.element + "_p(" + parentString + ")";
-    }
-
-    protected static class Node<E> {
-        E element;
-        Node<E> left;
-        Node<E> right;
-        Node<E> parent;
-
-        public Node(E element, Node<E> parent) {
-            this.element = element;
-            this.parent = parent;
-        }
-        public Node(E element) {
-            this(element, null);
-        }
     }
 }
