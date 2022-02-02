@@ -12,19 +12,74 @@ public class LCS {
 
 
 
-//    static int longestCommonSubsequence(String s1, String s2) {
-//        if (s1 == null || s2 == null) return 0;
-//        char[] arrs1 = s1.toCharArray();
-//        if (arrs1.length == 0) return 0;
-//        char[] arrs2 = s2.toCharArray();
-//        if (arrs2.length == 0) return 0;
-//
-//
-//    }
+    static int longestCommonSubsequence(String s1, String s2) {
+        if (s1 == null || s2 == null) return 0;
+        char[] arrs1 = s1.toCharArray();
+        if (arrs1.length == 0) return 0;
+        char[] arrs2 = s2.toCharArray();
+        if (arrs2.length == 0) return 0;
 
-        static int lcs(int[] arr1, int arr2[]) {
-            if (arr1 == null || arr2 == null) return 0;
-            if (arr1.length == 0 || arr2 .length == 0) return 0;
+        char[] rowsChars = arrs1, colsChars = arrs2;
+        if (arrs1.length < arrs2.length) {
+            colsChars = arrs1;
+            rowsChars = arrs2;
+        }
+        int[] dp = new int[colsChars.length + 1];
+        for (int i = 1; i <= rowsChars.length; i++) {
+            int cur = 0;
+            for (int j = 1; j <= colsChars.length; j++) {
+                int leftTop = cur;
+                cur = dp[j];
+                if (rowsChars[i - 1] == colsChars[j - 1]) {
+                    dp[j] = leftTop + 1;
+                } else {
+                    dp[j] = Math.max(dp[j], dp[j - 1]);
+                }
+            }
+        }
+        return dp[colsChars.length];
+    }
+
+
+    static int lcs2(int[] arr1, int[] arr2) {
+        if (arr1 == null || arr1.length == 0) return 0;
+        if (arr2 == null || arr2.length == 0) return 0;
+        int[] dp = new int[arr2.length + 1];
+        for (int i = 1; i <= arr1.length; i++) {
+            int cur = 0;
+            for (int j = 1; j <= arr2.length; j++) {
+                int leftTop = cur;
+                cur = dp[j];
+                if (arr1[i - 1] == arr2[j - 1]) {
+                    dp[j] = leftTop + 1;
+                } else {
+                    dp[j] = Math.max(dp[j], dp[j - 1]);
+                }
+            }
+        }
+        return dp[arr2.length];
+    }
+
+    static int lcs1(int[] arr1, int arr2[]) {
+        if (arr1 == null || arr1.length == 0) return 0;
+        if (arr2 == null || arr2.length == 0) return 0;
+
+        int[][] dp = new int[arr1.length + 1][arr2.length + 1];
+        for (int i = 0; i < arr1.length + 1; i++) {
+            for (int j = 0; j < arr2.length + 1; j++) {
+                if (arr1[i - 1] == arr2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }else {
+                    dp[i][j] = Math.max(dp[i - 1][j] + 1, dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[arr1.length][arr2.length];
+    }
+
+    static int lcs(int[] arr1, int arr2[]) {
+        if (arr1 == null || arr1.length == 0) return 0;
+        if (arr2 == null || arr2.length == 0) return 0;
 
             return lcs(arr1, arr1.length - 1, arr2, arr2.length - 1);
 
