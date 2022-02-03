@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/04-Recursion/04-Recursion.iml" filepath="$PROJECT_DIR$/04-Recursion/04-Recursion.iml" />
       <module fileurl="file://$PROJECT_DIR$/05-BackTracking/05-BackTracking.iml" filepath="$PROJECT_DIR$/05-BackTracking/05-BackTracking.iml" />
       <module fileurl="file://$PROJECT_DIR$/08-DynamicProgramming/08-DynamicProgramming.iml" filepath="$PROJECT_DIR$/08-DynamicProgramming/08-DynamicProgramming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/10-SkipList/10-SkipList.iml" filepath="$PROJECT_DIR$/10-SkipList/10-SkipList.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Code.iml" filepath="$PROJECT_DIR$/.idea/Code.iml" />
     </modules>
   </component>
