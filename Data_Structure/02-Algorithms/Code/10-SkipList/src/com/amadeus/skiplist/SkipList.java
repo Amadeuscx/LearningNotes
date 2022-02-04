@@ -1,5 +1,7 @@
 package com.amadeus.skiplist;
 
+import org.w3c.dom.Node;
+
 import java.util.Comparator;
 
 public class SkipList<K, V> {
@@ -8,7 +10,7 @@ public class SkipList<K, V> {
     private static final double P = 0.25;
     //字段
     private int size;
-    private Node<K, V> first;
+    private Node<K, V> first = new Node<>(null, null, MAX_LEVEL);
     /**
      * 有效层高
      */
@@ -88,8 +90,80 @@ public class SkipList<K, V> {
 
 
 
+    public V remove(K key) {
+        keyNullCheck(key);
+
+        Node<K, V> node = first;
+        for (int i = level - 1; i >= 0; i--) {
+            int cmp = -1;
+
+            while (node.nexts[i] != null &&
+                    (cmp = compare(node.nexts[i].key, key)) < 0) {
+
+                node = node.nexts[i];
+            }
+            if (cmp == 0) {
+                V oldValue = node.nexts[i].value;
+                node.nexts[i] = node.nexts[i].nexts[i];
+                if (i == 0) {
+                    size--;
+
+                    int newLevel = level;
+                    while (--newLevel >= 0 && first.nexts[newLevel] == null) {
+                        level = newLevel;
+                    }
+
+                    return oldValue;
+                }
+            }
+        }
+        return null;
+    }
+
+//    public V remove(K key) {
+//        keyNullCheck(key);
+//
+//        Node<K, V> node = first;
+//        Node<K, V>[] prevs = new Node[level];
+//        boolean exist = false;
+//        for (int i = level - 1; i >= 0; i--) {
+//            int cmp = -1;
+//            while (node.nexts[i] != null
+//                    && (cmp = compare(key, node.nexts[i].key)) > 0) {
+//                node = node.nexts[i];
+//            }
+//            prevs[i] = node;
+//            if (cmp == 0) exist = true;
+//        }
+//        if (!exist) return null;
+//
+//        // 需要被删除的节点
+//        Node<K, V> removedNode = node.nexts[0];
+//
+//        // 数量减少
+//        size--;
+//
+//        // 设置后继
+//        for (int i = 0; i < removedNode.nexts.length; i++) {
+//            prevs[i].nexts[i] = removedNode.nexts[i];
+//        }
+//
+//        // 更新跳表的层数
+//        int newLevel = level;
+//        while (--newLevel >= 0 && first.nexts[newLevel] == null) {
+//            level = newLevel;
+//        }
+//
+//        return removedNode.value;
+//    }
+
+
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public int size() {
+        return size;
     }
 
 
