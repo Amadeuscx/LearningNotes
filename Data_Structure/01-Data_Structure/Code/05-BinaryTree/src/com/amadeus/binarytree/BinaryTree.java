@@ -2,6 +2,8 @@ package com.amadeus.binarytree;
 
 import com.amadeus.printer.BinaryTreeInfo;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public abstract class BinaryTree<E> implements BinaryTreeInfo {
@@ -95,6 +97,41 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
             node = node.parent;
         }
         return node.parent;
+    }
+
+    /**
+     * 后序遍历
+     * @param root
+     * @param visitor
+     */
+    protected void postorder(Node<E> root, Visitor visitor) {
+        if (root == null || visitor == null) return;
+
+
+    }
+
+    /**
+     * 层序遍历
+     * @param root 开始节点
+     * @param visitor 访问器（拿到节点后干什么）
+     */
+    protected void levelOrder(Node<E> root, Visitor visitor) {
+        if (root == null || visitor == null) return;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            Node<E> cur = queue.poll();
+            if (visitor.visit(cur)) return;
+
+            if (cur.left != null) {
+                queue.offer(cur.left);
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+            }
+        }
     }
 
 
