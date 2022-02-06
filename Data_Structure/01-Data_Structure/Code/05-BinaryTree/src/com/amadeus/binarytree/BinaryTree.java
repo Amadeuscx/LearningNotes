@@ -12,8 +12,6 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
 
     /**
      * 前序遍历
-     * @param root
-     * @param visitor
      */
     protected void preorder(Node<E> root, Visitor<E> visitor) {
         if (root == null || visitor == null) {return;}
@@ -37,8 +35,6 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
 
     /**
      * 中序遍历
-     * @param root
-     * @param visitor
      */
     protected void inorder(Node<E> root, Visitor<E> visitor) {
         if (root == null && visitor == null) {return;}
@@ -63,7 +59,6 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
 
     /**
      * 寻找前驱节点
-     * @param node
      */
     protected Node<E> predecessor(Node<E> node) {
         if (node == null) {return null;}
@@ -154,6 +149,8 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
         }
 
     }
+
+
 
     public interface Visitor<E> {
         boolean visit(E element);

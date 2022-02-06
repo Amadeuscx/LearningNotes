@@ -67,9 +67,35 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
             node = s;
         }
 
+        Node<E> replacement = node.left == null ? node.right : node.left;
+        if (replacement != null) {
 
+            replacement.parent = node.parent;
 
+            if (node.parent == null) {
+                root = replacement;
+            }else if (node.isLeftchild()) {
+                node.parent.left = replacement;
+            }else {
+                node.parent.right = replacement;
+            }
+        }else if (node.parent == null) {
+            root = null;
+        }else {//node是叶子节点，但不是root
+            if (node.isLeftchild()) {
+                node.parent.left =null;
+            }else {
+                node.parent.right = null;
+            }
+        }
+    }
 
+    public void remove(E element) {
+        remove(getNode(element));
+    }
+
+    public boolean contains(E element) {
+        return getNode(element) != null;
     }
 
     private void elementNotNullCheck(E element) {
