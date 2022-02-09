@@ -59,7 +59,7 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
         inorder(root, visitor);
     }
 
-    /**
+    /**摸鱼一天
      * 寻找前驱节点
      */
     protected Node<E> predecessor(Node<E> node) {
