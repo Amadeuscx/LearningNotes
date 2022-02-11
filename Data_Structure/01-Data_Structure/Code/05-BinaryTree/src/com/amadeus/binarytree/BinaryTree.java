@@ -107,7 +107,22 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
     protected void postorder(Node<E> root, Visitor visitor) {
         if (root == null || visitor == null) return;
 
+        Stack<Node<E>> resultStack = new Stack<>();
+        Stack<Node<E>> tmpStack = new Stack<>();
+        Node<E> current = root;
 
+        while (current != null || !tmpStack.isEmpty()) {
+            while (current != null) {
+                resultStack.push(current);
+                tmpStack.push(current);
+                current = current.right;
+            }
+
+            if (!tmpStack.isEmpty()) {
+                current = tmpStack.pop();
+                current = current.left;
+            }
+        }
     }
 
     /**
