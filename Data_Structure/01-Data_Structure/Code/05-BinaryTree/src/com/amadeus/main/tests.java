@@ -20,7 +20,7 @@ public class tests {
         bst.add(2);
         bst.add(6);
         BinaryTrees.println(bst);
-        bst.inorder(new BinaryTree.Visitor() {
+        bst.postorder(new BinaryTree.Visitor() {
             @Override
             public boolean visit(Object element) {
                 System.out.print(element + " ");

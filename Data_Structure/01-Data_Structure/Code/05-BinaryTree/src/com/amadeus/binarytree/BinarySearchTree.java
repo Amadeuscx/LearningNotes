@@ -31,6 +31,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
 
     public void add(E element) {
         elementNotNullCheck(element);
+
         if (root == null) {
             root = createNode(element);
             size++;
@@ -49,13 +50,18 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
                 return;
             }
         }
+        Node<E> newNode = createNode(element, parent);
         if (compater(parent.element, element) < 0) {
-            parent.right = createNode(element, parent);
+            parent.right = newNode;
         } else {
-            parent.left = createNode(element, parent);
+            parent.left = newNode;
         }
         size++;
+
+        afterAdd(newNode);
     }
+
+    protected void afterAdd(Node<E> node) {}
 
     private void remove(Node<E> node) {
         if (node == null) {return;}
@@ -74,7 +80,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
 
             if (node.parent == null) {
                 root = replacement;
-            }else if (node.isLeftchild()) {
+            }else if (node.isLeftChild()) {
                 node.parent.left = replacement;
             }else {
                 node.parent.right = replacement;
@@ -82,7 +88,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         }else if (node.parent == null) {
             root = null;
         }else {//node是叶子节点，但不是root
-            if (node.isLeftchild()) {
+            if (node.isLeftChild()) {
                 node.parent.left =null;
             }else {
                 node.parent.right = null;

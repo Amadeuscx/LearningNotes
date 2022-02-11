@@ -123,6 +123,12 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
                 current = current.left;
             }
         }
+        while (!resultStack.isEmpty()) {
+            if (visitor.visit(resultStack.pop().element)) break;
+        }
+    }
+    public void postorder(Visitor visitor) {
+        postorder(root, visitor);
     }
 
     /**
@@ -192,7 +198,7 @@ public abstract class BinaryTree<E> implements BinaryTreeInfo {
             return (left == null && right == null);
         }
 
-        public boolean isLeftchild() {
+        public boolean isLeftChild() {
             return (parent != null && this == parent.left);
         }
 
