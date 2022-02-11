@@ -26,7 +26,26 @@ public class AVLTree<E> extends BinarySearchTree<E> {
         }
     }
 
-    private void rebalance(Node<E> node) {
+    private void rebalance(Node<E> grand) {
+        Node<E> parent = ((AVLNode<E>)grand).tallerChild();
+        Node<E> node = ((AVLNode<E>)parent).tallerChild();
+        if (parent.isLeftChild()) { // L
+            if (node.isLeftChild()) { // LL
+                rotateRight(grand);
+            } else { // LR
+                rotateLeft(parent);
+                rotateRight(grand);
+            }
+        } else { // R
+            if (node.isLeftChild()) { // RL
+                rotateRight(parent);
+                rotateLeft(grand);
+            } else { // RR
+                rotateLeft(grand);
+            }
+        }
+
+
 
     }
 
