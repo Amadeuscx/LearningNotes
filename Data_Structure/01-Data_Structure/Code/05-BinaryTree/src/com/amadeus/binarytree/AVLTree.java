@@ -49,18 +49,14 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 
     }
 
+    private void rotateLeft(Node<E> grand) {
 
 
+    }
 
+    private void rotateRight(Node<E> grand) {
 
-
-
-
-
-
-
-
-
+    }
 
 
     private static class AVLNode<E> extends Node<E> {
