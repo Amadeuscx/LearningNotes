@@ -50,11 +50,17 @@ public class AVLTree<E> extends BinarySearchTree<E> {
     }
 
     private void rotateLeft(Node<E> grand) {
+        Node<E> parent = grand.right;
+        Node<E> child = parent.left;
 
+        grand.right = child;
+        parent.left = grand;
+        afterRotate
 
     }
 
     private void rotateRight(Node<E> grand) {
+
 
     }
 
