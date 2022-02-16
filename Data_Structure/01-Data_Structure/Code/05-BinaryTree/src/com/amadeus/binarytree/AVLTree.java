@@ -26,6 +26,16 @@ public class AVLTree<E> extends BinarySearchTree<E> {
         }
     }
 
+    protected void afterRemove(Node<E> node) {
+        while (node.parent != null) {
+            if (isBalanced(node)) {
+                updateHeight(node);
+            }else {
+                rebalance(node);
+            }
+        }
+    }
+
     private void rebalance(Node<E> grand) {
         Node<E> parent = ((AVLNode<E>)grand).tallerChild();
         Node<E> node = ((AVLNode<E>)parent).tallerChild();
@@ -44,9 +54,6 @@ public class AVLTree<E> extends BinarySearchTree<E> {
                 rotateLeft(grand);
             }
         }
-
-
-
     }
 
     private void rotateLeft(Node<E> grand) {
@@ -55,14 +62,47 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 
         grand.right = child;
         parent.left = grand;
-        afterRotate
-
+        afterRotate(grand, parent, child);
     }
+
 
     private void rotateRight(Node<E> grand) {
+        Node<E> parent = grand.left;
+        Node<E> child = parent.right;
 
-
+        grand.left = child;
+        parent.right = grand;
+        afterRotate(grand, parent, child);
     }
+
+    private void afterRotate(Node<E> grand, Node<E> parent, Node<E> child) {
+        parent.parent = grand.parent;
+
+        if (grand.isLeftChild()) {
+            grand.parent.left = parent;
+        }else if (grand.isRightChild()) {
+            grand.parent.right = parent;
+        }else {
+            root = parent;
+        }
+
+        if (child != null) {
+            child.parent = grand;
+        }
+
+        grand.parent = parent;
+
+        updateHeight(grand);
+        updateHeight(parent);
+    }
+
+
+
+
+
+
+
+
 
 
     private static class AVLNode<E> extends Node<E> {
@@ -110,7 +150,11 @@ public class AVLTree<E> extends BinarySearchTree<E> {
         }
     }
 
-    protected AVLNode<E> createNode(E element) {
+
+
+
+
+    protected Node<E> createNode(E element) {
         return new AVLNode<E>(element);
     }
     protected Node<E> createNode(E element, Node<E> parent) {

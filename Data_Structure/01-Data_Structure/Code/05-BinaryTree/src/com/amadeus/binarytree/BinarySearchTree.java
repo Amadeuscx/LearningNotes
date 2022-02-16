@@ -64,7 +64,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
     protected void afterAdd(Node<E> node) {}
 
     private void remove(Node<E> node) {
-        if (node == null) {return;}
+        if (node == null) return;
 
         size--;
         if (node.hasTwoChilden()) {
@@ -85,16 +85,21 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
             }else {
                 node.parent.right = replacement;
             }
+            afterRemove(node);
         }else if (node.parent == null) {
             root = null;
+            //根节点删除后不用做任何处理
         }else {//node是叶子节点，但不是root
             if (node.isLeftChild()) {
                 node.parent.left =null;
             }else {
                 node.parent.right = null;
             }
+            afterRemove(node);
         }
     }
+
+    protected void afterRemove(Node<E> node) {}
 
     public void remove(E element) {
         remove(getNode(element));
