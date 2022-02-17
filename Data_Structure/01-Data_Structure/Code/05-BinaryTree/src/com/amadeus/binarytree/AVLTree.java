@@ -14,7 +14,7 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 
 
     protected void afterAdd(Node<E> node) {
-        while (node.parent != null) {
+        while ((node = node.parent) != null) {
             if (isBalanced(node)) {
                 updateHeight(node);
             }else {
@@ -27,7 +27,7 @@ public class AVLTree<E> extends BinarySearchTree<E> {
     }
 
     protected void afterRemove(Node<E> node) {
-        while (node.parent != null) {
+        while ((node = node.parent) != null) {
             if (isBalanced(node)) {
                 updateHeight(node);
             }else {

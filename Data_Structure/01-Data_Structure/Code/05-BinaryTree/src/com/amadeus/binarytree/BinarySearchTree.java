@@ -115,11 +115,11 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         }
     }
 
-    private Node<E> createNode(E element, Node<E> parent) {
+    protected Node<E> createNode(E element, Node<E> parent) {
         return new Node<E>(element, parent);
     }
 
-    private Node<E> createNode(E element) {
+    protected Node<E> createNode(E element) {
         return createNode(element, null);
     }
 
