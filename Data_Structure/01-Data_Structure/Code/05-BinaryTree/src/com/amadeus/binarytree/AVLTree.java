@@ -2,7 +2,7 @@ package com.amadeus.binarytree;
 
 import java.util.Comparator;
 
-public class AVLTree<E> extends BinarySearchTree<E> {
+public class AVLTree<E> extends BBST<E> {
 
     public AVLTree(Comparator<E> comparator) {
         super(comparator);
@@ -56,45 +56,52 @@ public class AVLTree<E> extends BinarySearchTree<E> {
         }
     }
 
-    private void rotateLeft(Node<E> grand) {
-        Node<E> parent = grand.right;
-        Node<E> child = parent.left;
-
-        grand.right = child;
-        parent.left = grand;
-        afterRotate(grand, parent, child);
-    }
-
-
-    private void rotateRight(Node<E> grand) {
-        Node<E> parent = grand.left;
-        Node<E> child = parent.right;
-
-        grand.left = child;
-        parent.right = grand;
-        afterRotate(grand, parent, child);
-    }
-
-    private void afterRotate(Node<E> grand, Node<E> parent, Node<E> child) {
-        parent.parent = grand.parent;
-
-        if (grand.isLeftChild()) {
-            grand.parent.left = parent;
-        }else if (grand.isRightChild()) {
-            grand.parent.right = parent;
-        }else {
-            root = parent;
-        }
-
-        if (child != null) {
-            child.parent = grand;
-        }
-
-        grand.parent = parent;
+    protected void afterRotate(Node<E> grand, Node<E> parent, Node<E> child) {
+        super.afterRotate(grand, parent, child);
 
         updateHeight(grand);
         updateHeight(parent);
     }
+
+//    private void rotateLeft(Node<E> grand) {
+//        Node<E> parent = grand.right;
+//        Node<E> child = parent.left;
+//
+//        grand.right = child;
+//        parent.left = grand;
+//        afterRotate(grand, parent, child);
+//    }
+//
+//
+//    private void rotateRight(Node<E> grand) {
+//        Node<E> parent = grand.left;
+//        Node<E> child = parent.right;
+//
+//        grand.left = child;
+//        parent.right = grand;
+//        afterRotate(grand, parent, child);
+//    }
+//
+//    private void afterRotate(Node<E> grand, Node<E> parent, Node<E> child) {
+//        parent.parent = grand.parent;
+//
+//        if (grand.isLeftChild()) {
+//            grand.parent.left = parent;
+//        }else if (grand.isRightChild()) {
+//            grand.parent.right = parent;
+//        }else {
+//            root = parent;
+//        }
+//
+//        if (child != null) {
+//            child.parent = grand;
+//        }
+//
+//        grand.parent = parent;
+//
+//        updateHeight(grand);
+//        updateHeight(parent);
+//    }
 
 
 
