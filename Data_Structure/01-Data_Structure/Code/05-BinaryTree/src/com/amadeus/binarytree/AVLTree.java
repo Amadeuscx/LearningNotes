@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 public class AVLTree<E> extends BBST<E> {
 
+
     public AVLTree(Comparator<E> comparator) {
         super(comparator);
     }
