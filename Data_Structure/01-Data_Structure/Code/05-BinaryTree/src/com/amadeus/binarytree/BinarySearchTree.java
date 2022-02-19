@@ -35,6 +35,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         if (root == null) {
             root = createNode(element);
             size++;
+            afterAdd(root);
             return;
         }
         Node<E> cur = root;
