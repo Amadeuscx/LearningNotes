@@ -27,6 +27,40 @@ public class RBTree<E> extends BBST<E>{
 
         if (isBlack(parent)) return;
 
+        // 如果父节点是黑色，直接返回
+        if (isBlack(parent)) return;
+
+        // 叔父节点
+        Node<E> uncle = parent.sibling();
+        // 祖父节点
+        Node<E> grand = red(parent.parent);
+        if (isRed(uncle)) { // 叔父节点是红色【B树节点上溢】
+            black(parent);
+            black(uncle);
+            // 把祖父节点当做是新添加的节点
+            afterAdd(grand);
+            return;
+        }
+
+        // 叔父节点不是红色
+        if (parent.isLeftChild()) { // L
+            if (node.isLeftChild()) { // LL
+                black(parent);
+            } else { // LR
+                black(node);
+                rotateLeft(parent);
+            }
+            rotateRight(grand);
+        } else { // R
+            if (node.isLeftChild()) { // RL
+                black(node);
+                rotateRight(parent);
+            } else { // RR
+                black(parent);
+            }
+            rotateLeft(grand);
+        }
+
 
 
     }
