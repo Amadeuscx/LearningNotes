@@ -30,7 +30,7 @@ public class RBTree<E> extends BBST<E>{
         // 如果父节点是黑色，直接返回
         if (isBlack(parent)) return;
 
-        // 叔父节点
+        // 叔父节点。
         Node<E> uncle = parent.sibling();
         // 祖父节点
         Node<E> grand = red(parent.parent);
